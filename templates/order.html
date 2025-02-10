@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자동 주문 시스템</title>
+    <script>
+        function sendOrder() {
+            let apple = document.getElementById("apple").value;
+            let banana = document.getElementById("banana").value;
+            let strawberry = document.getElementById("strawberry").value;
+
+            let orderData = {
+                "apple": parseInt(apple),
+                "banana": parseInt(banana),
+                "strawberry": parseInt(strawberry)
+            };
+
+            fetch("/order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</head>
+<body>
+    <h2>주문하기</h2>
+    <label>🍎 사과 개수:</label>
+    <input type="number" id="apple" min="0" value="0"><br><br>
+
+    <label>🍌 바나나 개수:</label>
+    <input type="number" id="banana" min="0" value="0"><br><br>
+
+    <label>🍓 딸기 개수:</label>
+    <input type="number" id="strawberry" min="0" value="0"><br><br>
+
+    <button onclick="sendOrder()">주문하기</button>
+</body>
+</html>
